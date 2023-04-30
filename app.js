@@ -1,11 +1,11 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
-const viewSelection = require('./cli_prompts/view_all')
+const view = require('./cli_prompts/view_all')
 
 // Array of possible questions to ask the use?
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 
-
+const init = () => {
 inquirer
   .prompt([
     {
@@ -21,15 +21,18 @@ inquirer
     switch (answers.startChoice) {
         case 'View All Departments':
             console.log('1')
-            viewSelection('department');
+            view.department('name', 'department');
+            init();
             break;
         case 'View All Roles':
             console.log('2')
-            viewSelection('role');
+            view.role('title', 'salary', 'role');
+            init();
             break;
         case 'View All Employees':
             console.log('3')
-            viewSelection('employee');
+            view.employee('first_name', 'last_name', 'employee');
+            init();
             break;
         case 'Add a Department':
             console.log('4')
@@ -58,3 +61,6 @@ inquirer
       // Something else went wrong
     }
   });
+};
+
+init();
