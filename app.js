@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
-const view = require('./cli_prompts/view_all')
+const view = require('./cli_prompts/view_all.js')
+const addNew = require('./cli_prompts/add_all.js')
 
 // Array of possible questions to ask the use?
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
@@ -35,7 +36,8 @@ inquirer
             init();
             break;
         case 'Add a Department':
-            console.log('4')
+            console.log('4');
+            addNew.department();
             break;
         case 'Add a Role':
             console.log('5')
@@ -64,3 +66,4 @@ inquirer
 };
 
 init();
+module.exports = init;
