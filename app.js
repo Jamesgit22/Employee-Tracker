@@ -26,17 +26,14 @@ const init = async () => {
     ]);
     switch (answers.startChoice) {
       case "View All Departments":
-        console.log("1");
         const depResults = await view.department("name", "department");
         console.table(depResults);
         break;
       case "View All Roles":
-        console.log("2");
         const roleResults = await view.role("title", "salary", "role");
         console.table(roleResults);
         break;
       case "View All Employees":
-        console.log("3");
         const empResults = await view.employee(
           "first_name",
           "last_name",
@@ -45,24 +42,19 @@ const init = async () => {
         console.table(empResults);
         break;
       case "Add a Department":
-        console.log("4");
         await addNew.department();
         break;
       case "Add a Role":
-        console.log("5");
         await addNew.role();
         break;
       case "Add an Employee":
-        console.log("6");
-        // await
+        await addNew.employee();
         break;
       case "Update an Employee Role":
         console.log("7");
-        // await
         break;
       case "Quit":
-        console.log("8");
-        // await
+        process.exit();
         break;
     }
   } catch (err) {

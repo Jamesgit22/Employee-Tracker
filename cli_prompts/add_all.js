@@ -38,6 +38,7 @@ const department = () => {
   });
 };
 
+// Get current list of existing departments
 const getDepartmentList = () => {
   return new Promise((resolve, reject) => {
     db.query("SELECT name FROM department", (err, results) => {
@@ -108,4 +109,99 @@ const role = () => {
   });
 };
 
-module.exports = { department, role };
+// Get current list of roles
+const getRoleList = () => {
+  return new Promise((resolve, reject) => {
+    db.query("SELECT title FROM role", (err, results) => {
+      err ? reject(err) : resolve(results.map((result) => result.title));
+    });
+  });
+};
+
+// Get current list of employees
+const getEmpList = () => {
+  return new Promise((resolve, reject) => {
+    db.query("SELECT first_name FROM employee", (err, results) => {
+      err ? reject(err) : resolve(results.map((result) => result.first_name));
+    });
+  });
+};
+let val4;
+// Add new employee to database
+const employee = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const roleList = await getRoleList();
+      const empList = await getEmpList();
+
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "Please enter the employee's first name.",
+            name: "firstName",
+          },
+          {
+            type: "input",
+            message: "Please enter the employee's last name.",
+            name: "lastName",
+          },
+          {
+            type: "list",
+            message: "Please enter the employee's role.",
+            choices: roleList,
+            name: "empRole",
+          },
+          {
+            type: "list",
+            message: "Please select the employee's manager.",
+            choices: empList,
+            name: "empManager",
+          },
+        ])
+        .then((answers) => {
+          const val1 = answers.firstName;
+          const val2 = answers.lastName;
+          const valRole = answers.empRole;
+          const valManager = answers.empManager;
+          let val3;
+          db.query(
+            "SELECT id FROM employee WHERE first_name = ?",
+            valManager,
+            (err, results) => {
+              if (err) {
+                throw err;
+              } else {
+                val4 = results[0].id;
+                console.log(val4);
+              }
+              db.query(
+                "SELECT id FROM role WHERE title = ?",
+                valRole,
+                (err, results) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    val3 = results[0].id;
+                    db.query(
+                      "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)",
+                      [val1, val2, val3, val4],
+                      (err, results) => {
+                        if (err) {
+                          reject(err);
+                        } else {
+                          resolve("Successfully added employee");
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          );
+        });
+    } catch {}
+  });
+};
+
+module.exports = { department, role, employee };
