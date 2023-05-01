@@ -41,6 +41,7 @@ inquirer
             break;
         case 'Add a Role':
             console.log('5')
+            addNew.role();
             break;
         case 'Add an Employee':
             console.log('6')
