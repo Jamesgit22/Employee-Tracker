@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const view = require("./cli_prompts/view_all.js");
 const addNew = require("./cli_prompts/add_all.js");
-
+const updateRole = require("./cli_prompts/update_r.js")
 // Array of possible questions to ask the use?
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 
@@ -52,6 +52,7 @@ const init = async () => {
         break;
       case "Update an Employee Role":
         console.log("7");
+        await updateRole();
         break;
       case "Quit":
         process.exit();

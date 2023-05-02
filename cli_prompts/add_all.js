@@ -200,7 +200,9 @@ const employee = () => {
             }
           );
         });
-    } catch {}
+    } catch (err) {
+      throw err;
+    }
   });
 };
 
