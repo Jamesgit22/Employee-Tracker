@@ -8,7 +8,6 @@ const department = (col1, table) => {
         throw err;
       } else {
         console.log("");
-        console.log(results);
         resolve(results);
       }
     });

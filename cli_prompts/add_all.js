@@ -173,7 +173,6 @@ const employee = () => {
                 throw err;
               } else {
                 val4 = results[0].id;
-                console.log(val4);
               }
               db.query(
                 "SELECT id FROM role WHERE title = ?",
